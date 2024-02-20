@@ -48,9 +48,10 @@
 				<?php if( get_field("availability-$language_field")): ?>
        			<span><?php the_field("availability-$language_field"); ?></span>
     			<?php endif; ?>
-				
+				<div class="availability-close-box">
 				<span class="availability-close">close</span>
-			</div>
+				</div>
+		</div>
 		
 		<div class="header-nav"> 
 			<nav id="site-navigation" class="main-navigation">

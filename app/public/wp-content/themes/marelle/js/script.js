@@ -1,23 +1,32 @@
 const siteName = document.querySelector(".siteName");
 const siteLoader = document.querySelector(".intro-load");
 const titleBox = document.querySelector(".site-branding");
+const availability = document.querySelector(".availability");
+const availabilityClose = document.querySelector(".availability-close-box");
+const header = document.querySelector(".header-nav");
+const footer = document.querySelector("footer");
+const footerBackgroundColor = getComputedStyle(footer).backgroundColor;
 
 document.addEventListener("DOMContentLoaded", function () {
-	if (window.scrollY < 0) {
-		window.scrollTo(0, 0);
+	if (sessionStorage.getItem("animationPlayed") !== "true") {
+		document.body.style.overflow = "hidden";
+
+		const timeline = gsap.timeline();
+		timeline
+			.fromTo(titleBox, { opacity: 0, top: "50%" }, { opacity: 1, duration: 3, delay: 1.5 })
+			.to(titleBox, { top: "78%", duration: 3, ease: "back.inOut(1.2)" })
+			.to(".intro-load", {
+				opacity: 0,
+				onComplete: () => ((document.body.style.overflow = "auto"), siteLoader.remove()),
+			});
+
+		sessionStorage.setItem("animationPlayed", "true");
+	} else {
+		titleBox.style.opacity = "1";
+		titleBox.style.top = "78%";
+		document.body.style.overflow = "auto";
+		siteLoader.remove();
 	}
-
-	document.body.style.overflow = "hidden";
-
-	const timeline = gsap.timeline();
-	timeline
-		.fromTo(titleBox, { opacity: 0, top: "50%" }, { opacity: 1, duration: 3, delay: 1.5 })
-		.to(titleBox, { top: "78%", duration: 3, ease: "back.inOut(1.2)" })
-		.to(".intro-load", {
-			opacity: 0,
-			onComplete: () => ((document.body.style.overflow = "auto"), siteLoader.remove()),
-		});
-	timeline.restart();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				if (entry.isIntersecting) {
 					gsap.to(entry.target, {
 						opacity: 1,
-						duration: 3,
+						duration: 2,
 						ease: "power2.out",
 					});
 
@@ -67,13 +76,52 @@ const timeline = gsap.timeline({
 		start: "top top",
 		end: "+=500",
 		scrub: 1,
-		markers: true,
+		// markers: true,
 	},
 });
 
-timeline.fromTo(titleBox, { top: "80%" }, { top: "8%" }).fromTo(title, { fontSize: 200 }, { fontSize: 30 }, 0);
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 550px)", () => {
+	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 200 }, { fontSize: 30 }, 0);
+});
+
+mm.add("(max-width: 549px)", () => {
+	timeline.fromTo(titleBox, { top: "90%" }, { top: "5%" }).fromTo(title, { fontSize: 75 }, { fontSize: 25 }, 0);
+});
 
 //Menu change animation and pop up for rates
+
+function setActiveLink(id) {
+	document.querySelectorAll(".main-navigation a").forEach((link) => {
+		link.classList.remove("active");
+	});
+
+	const currentLink = document.querySelector(`.main-navigation a[href="#${id}"]`);
+	let poppedUp = false;
+	if (currentLink) {
+		currentLink.classList.add("active");
+	}
+	if (id === "ratePackages" && poppedUp === false) {
+		header.classList.add("animation");
+		availability.classList.add("animation");
+
+		availabilityClose.addEventListener("click", () => {
+			header.classList.remove("animation");
+			availability.classList.remove("animation");
+			header.classList.add("animation-reverse");
+			availability.classList.add("animation-reverse");
+			poppedUp = true;
+		});
+	}
+}
+
+window.addEventListener("scroll", () => {
+	const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+	if (scrollTop + clientHeight >= scrollHeight - 5) {
+		setActiveLink("contact");
+	}
+});
 const sections = gsap.utils.toArray("section");
 sections.forEach((section, index) => {
 	ScrollTrigger.create({
@@ -86,27 +134,6 @@ sections.forEach((section, index) => {
 		onEnter: () => setActiveLink(section.id),
 		onEnterBack: () => setActiveLink(section.id),
 	});
-});
-
-function setActiveLink(id) {
-	document.querySelectorAll(".main-navigation a").forEach((link) => {
-		link.classList.remove("active");
-	});
-
-	const currentLink = document.querySelector(`.main-navigation a[href="#${id}"]`);
-	if (currentLink) {
-		currentLink.classList.add("active");
-	}
-	if (id === "ratePackages") {
-		console.log("rates and packages");
-	}
-}
-
-window.addEventListener("scroll", () => {
-	const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-	if (scrollTop + clientHeight >= scrollHeight - 5) {
-		setActiveLink("contact");
-	}
 });
 
 // if the screen is mobile then a slide show appears, if not a custom slideshow cursor appears
@@ -182,9 +209,6 @@ if (window.innerWidth < 1000) {
 }
 
 // Header colour change when it reaches the footer
-const header = document.querySelector(".header-nav");
-const footer = document.querySelector("footer");
-const footerBackgroundColor = getComputedStyle(footer).backgroundColor;
 
 const observer = new IntersectionObserver(
 	(entries) => {
@@ -204,8 +228,3 @@ const observer = new IntersectionObserver(
 );
 
 observer.observe(footer);
-
-// const availability = document.querySelector("availability");
-// const close = document.querySelector("availability-close");
-
-// document.addEventListener("click", function () {});
