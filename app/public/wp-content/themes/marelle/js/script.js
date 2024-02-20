@@ -3,9 +3,18 @@ const siteLoader = document.querySelector(".intro-load");
 const titleBox = document.querySelector(".site-branding");
 const availability = document.querySelector(".availability");
 const availabilityClose = document.querySelector(".availability-close-box");
+
 const header = document.querySelector(".header-nav");
+
 const footer = document.querySelector("footer");
 const footerBackgroundColor = getComputedStyle(footer).backgroundColor;
+
+const slideshow = document.querySelector(".slideshow-container");
+
+const cursorContainer = document.querySelector(".custom-cursor");
+const imageContainer = document.querySelector(".cursor-image-container");
+const cursorImage = document.createElement("img");
+const imageTitleDisplay = document.querySelector(".cursor-image-title");
 
 document.addEventListener("DOMContentLoaded", function () {
 	if (sessionStorage.getItem("animationPlayed") !== "true") {
@@ -29,6 +38,42 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
+siteName.addEventListener("mouseenter", function () {
+	this.dataset.originalText = this.textContent;
+	this.textContent = "Bonjour";
+});
+
+siteName.addEventListener("mouseleave", function () {
+	this.textContent = this.dataset.originalText;
+});
+
+//Header scroll animation
+gsap.registerPlugin(ScrollTrigger);
+
+const title = document.querySelector(".site-branding h1");
+
+const timeline = gsap.timeline({
+	scrollTrigger: {
+		pin: true,
+		start: "top top",
+		end: "+=500",
+		scrub: 1,
+	},
+});
+
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 801px)", () => {
+	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 200 }, { fontSize: 30 }, 0);
+});
+
+mm.add("(max-width: 800px)", () => {
+	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 150 }, { fontSize: 30 }, 0);
+});
+
+mm.add("(max-width: 549px)", () => {
+	timeline.fromTo(titleBox, { top: "90%" }, { top: "5%" }).fromTo(title, { fontSize: 75 }, { fontSize: 25 }, 0);
+});
 document.addEventListener("DOMContentLoaded", () => {
 	const elements = document.querySelectorAll("section");
 
@@ -54,40 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	elements.forEach((el) => {
 		observer.observe(el);
 	});
-});
-
-siteName.addEventListener("mouseenter", function () {
-	this.dataset.originalText = this.textContent;
-	this.textContent = "Bonjour";
-});
-
-siteName.addEventListener("mouseleave", function () {
-	this.textContent = this.dataset.originalText;
-});
-
-//Header scroll animation
-gsap.registerPlugin(ScrollTrigger);
-
-const title = document.querySelector(".site-branding h1");
-
-const timeline = gsap.timeline({
-	scrollTrigger: {
-		pin: true,
-		start: "top top",
-		end: "+=500",
-		scrub: 1,
-		// markers: true,
-	},
-});
-
-let mm = gsap.matchMedia();
-
-mm.add("(min-width: 550px)", () => {
-	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 200 }, { fontSize: 30 }, 0);
-});
-
-mm.add("(max-width: 549px)", () => {
-	timeline.fromTo(titleBox, { top: "90%" }, { top: "5%" }).fromTo(title, { fontSize: 75 }, { fontSize: 25 }, 0);
 });
 
 //Menu change animation and pop up for rates
@@ -137,8 +148,10 @@ sections.forEach((section, index) => {
 });
 
 // if the screen is mobile then a slide show appears, if not a custom slideshow cursor appears
-if (window.innerWidth < 1000) {
+if (window.innerWidth < 1050) {
 	let currentIndex = 0;
+	slideshow.style.display = "block";
+	cursorContainer.style.display = "none";
 	const slides = document.querySelectorAll(".slide");
 	const totalSlides = slides.length;
 
@@ -159,14 +172,10 @@ if (window.innerWidth < 1000) {
 
 	setInterval(changeSlide, 6000);
 } else {
-	const cursorContainer = document.querySelector(".custom-cursor");
-
-	const imageContainer = document.querySelector(".cursor-image-container");
-	const cursorImage = document.createElement("img");
+	slideshow.style.display = "none";
+	cursorContainer.style.display = "block";
 
 	imageContainer.appendChild(cursorImage);
-
-	const imageTitleDisplay = document.querySelector(".cursor-image-title");
 
 	const images = slideshowImages.data;
 

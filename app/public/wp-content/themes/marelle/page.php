@@ -92,7 +92,7 @@ get_header();
 
 					echo '<div class="option-block">';
 					echo '<h3 class="option-title">' . wp_kses_post($title) . '</h3>'; 
-                    echo '<p class="option-text">' . wp_kses_post($text) . '</p>';
+                    echo wp_kses_post($text);
 					echo'</div>';
 						endwhile;
 						echo'</div>';
@@ -141,7 +141,7 @@ get_header();
 
 			echo '<div class="option-block">';
 			echo '<h3 class="option-title rates">' . wp_kses_post($title) . '</h3>'; 
-			echo '<p class="option-text">' .wp_kses_post($text). '<p>';
+			echo wp_kses_post($text);
 			echo'</div>';
 		endwhile;
 		echo'</div>';
@@ -186,7 +186,7 @@ get_header();
 			echo '<div class="option-block">';
 
 			echo '<h3 class="service-title">' . wp_kses_post($name) . '</h3>'; 
-			echo '<p class="option-text">' . wp_kses_post($testimonial) . '</p>';
+			echo  wp_kses_post($testimonial);
 			echo'</div>';
 		endwhile;
 		echo'</div>';
