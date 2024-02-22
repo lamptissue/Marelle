@@ -17,34 +17,37 @@ get_header();
 <?php $current_lang = isset($_GET['lang']) ? $_GET['lang'] : 'en'; ?>
 
 <?php $language_field = $current_lang == 'fr' ? 'fr' : 'en';?>
+
 <div class="intro-load"></div>
 
-<section>
-			<div class="introduction-container">
-		<?php
+<section class="image-hover-container">
+
+		<div class="introduction-container">
+			<?php
     		if( get_field("introduction-$language_field") ):
         	the_field("introduction-$language_field");
    			 endif;?>
 		</div>
 
-		<div class="custom-cursor">
+		<!-- <div class="custom-cursor">
 			<div class="cursor-image-container"></div>
 		<p class="cursor-image-title"></p>
-		</div>
+		</div> -->
 
 		<div class="slideshow-container">
-		<div class="slideshow">
-			<?php $images = get_field('slideshowCursor');
-			if( $images ): ?>
-			<?php foreach( $images as $image ): ?>
-				<div class="slide">
-				<img src="<?php echo esc_url($image['sizes']['large']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
-				<div class="slide-text"><p><?php echo esc_html($image['title']); ?></p></div>
-				</div>
- 			<?php endforeach; ?>
-			<?php endif; ?>
-		</div>
+			<div class="slideshow">
+				<?php $images = get_field('slideshowCursor');
+				if( $images ): ?>
+				<?php foreach( $images as $image ): ?>
+					<div class="slide">
+					<img src="<?php echo esc_url($image['sizes']['large']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
+					<div class="slide-text"><p><?php echo esc_html($image['title']); ?></p></div>
+					</div>
+ 				<?php endforeach; ?>
+				<?php endif; ?>
 			</div>
+		</div>
+
 </section>
 
 	<main id="primary" class="site-main">

@@ -34,26 +34,16 @@
 		<a href="?lang=fr" class="<?php echo $current_lang == 'fr' ? 'selected-language fr' : ''; ?>">FR</a>
 		</div>
 
-		
-
+		<h1 class="site-name-animation"><?php bloginfo('name'); ?></h1>
 
 		<div class="site-branding">
-			<div class="flip-container">
-				<div class="card">
-  				<div class="flip-front">
-					<h1 class="site-name">
-						<a href="#page" ><?php bloginfo('name'); ?></a>
-					</h1>
-  				</div>
-  				<div class="flip-back">
-    				<h1 class="site-name">
-						<a href="#page">Bonjour</a>
-					</h1>
-  				</div>
-				</div>
-			</div>
+		<h1>
+			<a href="#page" class="site-name">
+			<?php bloginfo('name'); ?>
+			</a>
+		</h1>
 		</div>	
-		
+
 		<div class="availability"> 
 			<span>notice</span>
 				<?php if( get_field("availability-$language_field")): ?>
@@ -72,7 +62,5 @@
    				]); ?>
 			</nav>
 		</div>
-
-
 
 	</header>
