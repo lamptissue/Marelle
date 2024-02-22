@@ -35,13 +35,24 @@
 		</div>
 
 		
+
+
 		<div class="site-branding">
-		<h1>
-			<a href="#page" class="siteName">
-			<?php bloginfo('name'); ?>
-			</a>
-		</h1>
-		</div>		
+			<div class="flip-container">
+				<div class="card">
+  				<div class="flip-front">
+					<h1 class="site-name">
+						<a href="#page" ><?php bloginfo('name'); ?></a>
+					</h1>
+  				</div>
+  				<div class="flip-back">
+    				<h1 class="site-name">
+						<a href="#page">Bonjour</a>
+					</h1>
+  				</div>
+				</div>
+			</div>
+		</div>	
 		
 		<div class="availability"> 
 			<span>notice</span>

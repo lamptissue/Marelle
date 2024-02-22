@@ -182,9 +182,48 @@ h1 {
 	opacity: 0;
 }
 
-.siteName:hover {
+.flip-back h1 {
 	font-family: var(--title-text);
 	font-style: italic;
+}
+
+.flip-container {
+	position: absolute;
+	width: auto;
+	height: auto;
+	perspective: 1000px;
+}
+.flip-front,
+.flip-back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.flip-back {
+	transform: rotateX(180deg);
+}
+.card {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 1s ease;
+}
+
+.flip-container:hover .card {
+	transform: rotateX(180deg);
+}
+
+.flip-container:hover {
+	transform: rotateX(360deg);
 }
 
 /* Main */
@@ -571,7 +610,7 @@ footer {
 
 	.service-title {
 		font-size: 15px;
-		margin: 0;
+		margin: 0 0 29px 0;
 	}
 
 	.main-text-clients {
@@ -688,9 +727,12 @@ footer {
 	.option-block p,
 	.option-title,
 	.service-title,
-	.contact-options-title,
-	.header-nav {
+	.contact-options-title {
 		font-size: 12px;
+	}
+
+	.header-nav {
+		font-size: 10px;
 	}
 
 	.bottom {
@@ -708,5 +750,20 @@ footer {
 
 	.copyright {
 		margin-top: 30px;
+	}
+	.menu-item {
+		margin-right: 15px;
+	}
+}
+
+@media (max-width: 409px) {
+	.availability {
+		font-size: 10px;
+	}
+	.availability-close-box {
+		margin-bottom: -54px;
+	}
+	ul {
+		padding-left: 10px;
 	}
 }

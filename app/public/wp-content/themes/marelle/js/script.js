@@ -1,4 +1,5 @@
-const siteName = document.querySelector(".siteName");
+const siteName = document.querySelectorAll(".flip-front .site-name, .flip-back .site-name");
+
 const siteLoader = document.querySelector(".intro-load");
 const titleBox = document.querySelector(".site-branding");
 const availability = document.querySelector(".availability");
@@ -38,19 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-siteName.addEventListener("mouseenter", function () {
-	this.dataset.originalText = this.textContent;
-	this.textContent = "Bonjour";
-});
-
-siteName.addEventListener("mouseleave", function () {
-	this.textContent = this.dataset.originalText;
-});
-
 //Header scroll animation
 gsap.registerPlugin(ScrollTrigger);
-
-const title = document.querySelector(".site-branding h1");
 
 const timeline = gsap.timeline({
 	scrollTrigger: {
@@ -64,15 +54,11 @@ const timeline = gsap.timeline({
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 801px)", () => {
-	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 200 }, { fontSize: 30 }, 0);
+	timeline.fromTo(titleBox, { top: "78%" }, { top: "5%" }).fromTo(siteName, { fontSize: 200 }, { fontSize: 30 }, 0);
 });
 
 mm.add("(max-width: 800px)", () => {
-	timeline.fromTo(titleBox, { top: "80%" }, { top: "5%" }).fromTo(title, { fontSize: 150 }, { fontSize: 30 }, 0);
-});
-
-mm.add("(max-width: 549px)", () => {
-	timeline.fromTo(titleBox, { top: "90%" }, { top: "5%" }).fromTo(title, { fontSize: 75 }, { fontSize: 25 }, 0);
+	timeline.fromTo(titleBox, { top: "90%" }, { top: "5%" }).fromTo(siteName, { fontSize: 75 }, { fontSize: 25 }, 0);
 });
 document.addEventListener("DOMContentLoaded", () => {
 	const elements = document.querySelectorAll("section");
